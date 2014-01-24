@@ -1,4 +1,5 @@
-from flask import Blueprint
+from flask import Blueprint, request, jsonify
+from werkzeug.exceptions import BadRequestKeyError
 from crud import Crud
 
 api = Blueprint('api', __name__, url_prefix='/api/v1',)
@@ -9,7 +10,19 @@ def getAll():
 
 @api.route('/jobs', methods=['POST'])
 def create():
-	return Crud(something='foo').create()
+	try:
+		site = {
+			'method': request.form['method'],
+			'interval': request.form['interval'],
+			'title': request.form['title'],
+			'url': request.form['url']
+		}
+		return Crud(**site).create()
+	except BadRequestKeyError, e:
+		return jsonify({
+			'result': False,
+			'error': 'Missing parameter'
+		}), e.code
 
 @api.route('/jobs/<site_id>', methods=['GET'])
 def read(site_id):
@@ -17,7 +30,20 @@ def read(site_id):
 
 @api.route('/jobs/<site_id>', methods=['PUT'])
 def update(site_id):
-	return Crud(id=site_id, something_else='bar', something='baz').update()
+	try:
+		site = {
+			'id': site_id,
+			'method': request.form['method'],
+			'interval': request.form['interval'],
+			'title': request.form['title'],
+			'url': request.form['url']
+		}
+		return Crud(**site).update()
+	except BadRequestKeyError, e:
+		return jsonify({
+			'result': False,
+			'error': 'Missing parameter'
+		}), e.code
 
 @api.route('/jobs/<site_id>', methods=['DELETE'])
 def delete(site_id):
