@@ -4,8 +4,8 @@ from redis import Redis
 from flask import jsonify
 
 class Crud():
-	def __init__(self, **kwargs):
-		self.r = Redis()
+	def __init__(self, _REDIS_HOST_, _REDIS_PORT_, _REDIS_DB_, **kwargs):
+		self.r = Redis(host=_REDIS_HOST_, port=_REDIS_PORT_, db=_REDIS_DB_)
 		self.NOT_FOUND = jsonify({
 			'result': False,
 			'error': 'Site not found'
@@ -44,7 +44,7 @@ class Crud():
 			'result': True,
 			'message': 'Site created.',
 			'data': self.r.hgetall(self.site['id'])
-		}), 200
+		}), 201
 
 	def read(self):
 		if self.r.exists(self.site['id']):
