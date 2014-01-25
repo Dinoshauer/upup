@@ -4,6 +4,30 @@ from datetime import datetime
 from redis import Redis
 import app
 
+class UpUpTestAppConfigInTesting(unittest.TestCase):
+	def setUp(self):
+		app.app.config['TESTING'] = True
+		self.app = app.app.test_client()
+
+	def testConfig(self):
+		print app.app.config
+		print self.app.config
+		# assert self.app.config['TESTING']
+		# assert self.app.config['REDIS_DB'] is 1
+		# assert isinstance(self.app.config['REDIS_DB'], int)
+		# assert isinstance(self.app.config['REDIS_HOST'], str)
+		# assert isinstance(self.app.config['REDIS_PORT'], int)
+
+# class UpUpTestAppConfigInProductino(unittest.TestCase):
+# 	def setUp(self):
+# 		self.app = app.app.test_client()
+
+# 	def testConfig(self):
+# 		assert not app.config['TESTING']
+# 		assert isinstance(app.config['REDIS_DB'], int)
+# 		assert isinstance(app.config['REDIS_HOST'], str)
+# 		assert isinstance(app.config['REDIS_PORT'], int)
+
 class UpUpTestGettingAllSitesNotFound(unittest.TestCase):
 	def setUp(self):
 		Redis().flushall()
