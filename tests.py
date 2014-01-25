@@ -17,7 +17,6 @@ class UpUpTestGettingAllSitesNotFound(unittest.TestCase):
 		assert 'Site not found' in r['error']
 		assert response.status_code == 404
 
-
 class UpUpTestGettingAllSites(unittest.TestCase):
 	def setUp(self):
 		app.app.config['TESTING'] = True
@@ -119,7 +118,6 @@ class UpUpTestDeleteSite(unittest.TestCase):
 		assert not r['result']
 		assert 'Site not found' in r['error']
 		assert response.status_code == 404
-
 
 class UpUpTestUpdateSite(unittest.TestCase):
 	def setUp(self):
