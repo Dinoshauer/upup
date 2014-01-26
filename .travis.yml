@@ -2,9 +2,8 @@ language: python
 python:
     - "2.7"
 # command to install dependencies
-before_install:
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq redis-server
+services:
+    - redis-server
 install:
     - "pip install -r req.txt"
 # command to run tests
