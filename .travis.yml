@@ -7,5 +7,5 @@ services:
 install:
     - "pip install -r req.txt"
 # command to run tests
-script: "nosetests --cov-config .coveragerc"
+script: "nosetests --cov-config .coveragerc  --with-coverage"
 after_success: coveralls
