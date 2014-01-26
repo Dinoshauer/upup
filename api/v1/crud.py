@@ -34,12 +34,7 @@ class Crud():
 
 	def create(self):
 		for key, value in self.site.items():
-			redis = self.r.hsetnx(self.site['id'], key, value)
-			if not redis:
-				return jsonify({
-					'result': False,
-					'error': 'Key already exists.',
-				}), 409
+			self.r.hsetnx(self.site['id'], key, value)
 		return jsonify({
 			'result': True,
 			'message': 'Site created.',
@@ -64,7 +59,8 @@ class Crud():
 					'message': 'Site updated.',
 					'data': self.r.hgetall(self.site['id'])
 				}), 200
-			return 'ok'
+			else:
+				return self.NOT_FOUND
 		return self.NOT_FOUND
 
 	def delete(self):

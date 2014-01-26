@@ -1,24 +1,22 @@
-import unittest
+from unittest import TestCase
 import json
 from datetime import datetime
 from redis import Redis
 import app
 
-class UpUpTestAppConfigInTesting(unittest.TestCase):
+class UpUpTestAppConfigInTesting(TestCase):
 	def setUp(self):
 		app.app.config['TESTING'] = True
 		self.app = app.app.test_client()
 
 	def testConfig(self):
-		print app.app.config
-		print self.app.config
-		# assert self.app.config['TESTING']
-		# assert self.app.config['REDIS_DB'] is 1
-		# assert isinstance(self.app.config['REDIS_DB'], int)
-		# assert isinstance(self.app.config['REDIS_HOST'], str)
-		# assert isinstance(self.app.config['REDIS_PORT'], int)
+		assert self.app.config['TESTING']
+		assert self.app.config['REDIS_DB'] is 1
+		assert isinstance(self.app.config['REDIS_DB'], int)
+		assert isinstance(self.app.config['REDIS_HOST'], str)
+		assert isinstance(self.app.config['REDIS_PORT'], int)
 
-# class UpUpTestAppConfigInProductino(unittest.TestCase):
+# class UpUpTestAppConfigInProduction(TestCase):
 # 	def setUp(self):
 # 		self.app = app.app.test_client()
 
@@ -28,7 +26,7 @@ class UpUpTestAppConfigInTesting(unittest.TestCase):
 # 		assert isinstance(app.config['REDIS_HOST'], str)
 # 		assert isinstance(app.config['REDIS_PORT'], int)
 
-class UpUpTestGettingAllSitesNotFound(unittest.TestCase):
+class UpUpTestGettingAllSitesNotFound(TestCase):
 	def setUp(self):
 		Redis().flushall()
 		app.app.config['TESTING'] = True
@@ -41,7 +39,7 @@ class UpUpTestGettingAllSitesNotFound(unittest.TestCase):
 		assert 'Site not found' in r['error']
 		assert response.status_code == 404
 
-class UpUpTestGettingAllSites(unittest.TestCase):
+class UpUpTestGettingAllSites(TestCase):
 	def setUp(self):
 		app.app.config['TESTING'] = True
 		self.app = app.app.test_client()
@@ -60,7 +58,7 @@ class UpUpTestGettingAllSites(unittest.TestCase):
 		assert isinstance(json.loads(response.data), dict)
 		assert response.status_code == 200
 
-class UpUpTestGetOneSite(unittest.TestCase):
+class UpUpTestGetOneSite(TestCase):
 	def setUp(self):
 		app.app.config['TESTING'] = True
 		self.app = app.app.test_client()
@@ -97,7 +95,7 @@ class UpUpTestGetOneSite(unittest.TestCase):
 		assert 'Site not found' in r['error']
 		assert response.status_code == 404
 
-class UpUpTestCreateSite(unittest.TestCase):
+class UpUpTestCreateSite(TestCase):
 	def setUp(self):
 		app.app.config['TESTING'] = True
 		self.app = app.app.test_client()
@@ -122,7 +120,15 @@ class UpUpTestCreateSite(unittest.TestCase):
 		assert 'GET' in r['method']
 		assert isinstance(datetime.strptime(r['added'], '%Y-%m-%d %H:%M:%S.%f'), datetime)
 
-class UpUpTestDeleteSite(unittest.TestCase):
+	def testMissingKey(self):
+		data = {'method': 'GET', 'title': 'test-site-1', 'interval': 80}
+		response = self.app.post('/api/v1/jobs', data=data)
+		response_data = json.loads(response.data)
+		assert response.status_code == 400
+		assert not response_data['result']
+		assert 'Missing parameter' in response_data['error']
+
+class UpUpTestDeleteSite(TestCase):
 	def setUp(self):
 		app.app.config['TESTING'] = True
 		self.app = app.app.test_client()
@@ -143,7 +149,7 @@ class UpUpTestDeleteSite(unittest.TestCase):
 		assert 'Site not found' in r['error']
 		assert response.status_code == 404
 
-class UpUpTestUpdateSite(unittest.TestCase):
+class UpUpTestUpdateSite(TestCase):
 	def setUp(self):
 		app.app.config['TESTING'] = True
 		self.app = app.app.test_client()
@@ -175,5 +181,10 @@ class UpUpTestUpdateSite(unittest.TestCase):
 		assert 'Site not found' in r['error']
 		assert response.status_code == 404
 
-if __name__ == '__main__':
-	unittest.main()
+	def testMissingKey(self):
+		data = {'method': 'GET', 'title': 'test-site-1', 'interval': 80}
+		response = self.app.put('/api/v1/jobs/{}'.format(self.response_data['id']), data=data)
+		response_data = json.loads(response.data)
+		assert response.status_code == 400
+		assert not response_data['result']
+		assert 'Missing parameter' in response_data['error']
