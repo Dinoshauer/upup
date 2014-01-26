@@ -7,7 +7,6 @@ before_install:
     - sudo apt-get install -qq redis-server
 install:
     - "pip install -r req.txt"
-    - "pip install coveralls"
 # command to run tests
 script: "nosetests --cov-config .coveragerc"
 after_success: coveralls
