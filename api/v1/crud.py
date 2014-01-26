@@ -16,6 +16,7 @@ class Crud():
 			'title': kwargs.get('title'),
 			'url': kwargs.get('url'),
 			'interval': kwargs.get('interval', 60),
+			'last_run': 'never',
 			'added': kwargs.get('added', datetime.now()),
 			'active': kwargs.get('active', True)
 		}
