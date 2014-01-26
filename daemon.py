@@ -4,7 +4,7 @@ from time import sleep
 from datetime import datetime, timedelta
 from redis import Redis
 from rq import Queue
-from jobs.jobs import requestSite 
+from jobs.jobs import requestSite
 
 logger = logging.getLogger('upup-daemon.logger')
 logger.setLevel(logging.DEBUG)
@@ -23,7 +23,6 @@ def checkRedis():
 			result = q.enqueue(requestSite, site)
 			logger.debug('QUEUE: Sending job {} to queue'.format(site['title']))
 			logger.debug('QUEUE: Job recieved. Queue ID: {}'.format(result.id))
-			r.hset(key, 'last_run', datetime.now())
 		else:
 			last_run = datetime.strptime(site['last_run'], '%Y-%m-%d %H:%M:%S.%f')
 			threshold = datetime.now() - timedelta(seconds=int(site['interval']))
@@ -32,8 +31,6 @@ def checkRedis():
 				result = q.enqueue(requestSite, site)
 				logger.debug('QUEUE: Sending job {} to queue'.format(site['title']))
 				logger.debug('QUEUE: Job recieved. Queue ID: {}'.format(result.id))
-				r.hset(key, 'last_run', datetime.now())
-				print result.id
 			else:
 				logger.debug('JOB: {} should not run, it will run in {} seconds'.format(site['title'], (last_run - threshold).seconds))
 	logger.debug('Iteration finished')
