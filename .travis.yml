@@ -2,9 +2,12 @@ language: python
 python:
     - "2.7"
 # command to install dependencies
+before_install:
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq redis-server
 install:
     - "pip install -r req.txt"
     - "pip install coveralls"
 # command to run tests
-script: "nosetests --with-coverage"
+script: "nosetests --cov-config .coveragerc"
 after_success: coveralls
