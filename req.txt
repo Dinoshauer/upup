@@ -5,6 +5,7 @@ Jinja2==2.7.2
 MarkupSafe==0.18
 PyYAML==3.10
 Werkzeug==0.9.4
+argcomplete==0.6.9
 argh==0.24.1
 argparse==1.2.1
 cov-core==1.7
