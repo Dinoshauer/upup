@@ -1,2 +1,5 @@
-def foo():
-	print 'Running job from foo'
+import time
+
+def requestSite(site):
+	print site
+	time.sleep(1)
