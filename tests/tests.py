@@ -143,7 +143,7 @@ class UpUpTestDeleteSite(TestCase):
 		assert response.status_code == 200
 
 	def testDeleteNotFound(self):
-		response = self.app.get('api/v1/jobs/this-is-invalid')
+		response = self.app.delete('api/v1/jobs/this-is-invalid')
 		r = json.loads(response.data)
 		assert not r['result']
 		assert 'Site not found' in r['error']
