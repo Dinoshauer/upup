@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!--<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">-->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<style>
+			body {
+				padding-left: 25%;
+				padding-right: 25%;
+			}
+			header {
+				padding: 60px;
+			}
+			.good {
+				color: #3C763D;
+			}
+			.bad {
+				color: #D46565;
+			}
+			.warning {
+				color: #FFD98B;
+			}
+			.danger {
+				margin-left: -10px;
+				margin-right: 6px;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<i class="fa fa-arrow-up fa-4x"></i>
+			<i class="fa fa-arrow-up fa-4x"></i>
+			<p class="text-right">
+				<a href="#" id="new-server"><i class="fa fa-plus fa-2x"></i></a>
+			</p>
+		</header>
+		<div class="list-group">
+			<a href="#" class="list-group-item">
+				<i class="fa fa-hdd-o fa-5x pull-left bad"></i>
+				<h4 class="list-group-item-heading">Web-1</h4>
+				<p class="list-group-item-text">56.23.2.482</p>
+				<p class="list-group-item-text">20ms</p>
+				<p class="list-group-item-text">
+					60 seconds ago
+				</p>
+			</a>
+			<a href="#" class="list-group-item">
+				<i class="fa fa-hdd-o fa-5x pull-left good"></i>
+				<h4 class="list-group-item-heading">Web-2</h4>
+				<p class="list-group-item-text">52.482.70.21</p>
+				<p class="list-group-item-text">23ms</p>
+				<p class="list-group-item-text">50 seconds ago</p>				
+			</a>
+			<a href="#" class="list-group-item">
+				<i class="fa fa-refresh fa-spin fa-5x pull-left warning"></i>
+				<h4 class="list-group-item-heading">DB-1</h4>
+				<p class="list-group-item-text">90.42.322.482</p>
+				<p class="list-group-item-text">25ms</p>
+				<p class="list-group-item-text">34 seconds ago</p>
+			</a>
+			<a href="#" class="list-group-item">
+				<span class="fa-stack fa-lg fa-3x pull-left danger">
+					<i class="fa fa-hdd-o fa-stack-1x"></i>
+					<i class="fa fa-ban fa-stack-2x text-danger"></i>
+				</span>
+				<h4 class="list-group-item-heading">Redis-1</h4>
+				<p class="list-group-item-text">52.482.12.4</p>
+				<p class="list-group-item-text">Unresponsive!</p>
+				<p class="list-group-item-text">56 seconds ago</p>
+			</a>
+			<a href="#" class="list-group-item">
+				<i class="fa fa-hdd-o fa-5x pull-left good"></i>
+				<h4 class="list-group-item-heading">LB-1</h4>
+				<p class="list-group-item-text">90.785.23.4</p>
+				<p class="list-group-item-text">80ms</p>
+				<p class="list-group-item-text">45 seconds ago</p>
+			</a>
+		</div>
+		<!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>-->
+		<script src="js/jquery-1.10.2.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script>
+		</script>
+	</body>
+</html>
