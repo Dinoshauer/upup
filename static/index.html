@@ -28,9 +28,23 @@
 			.warning {
 				color: #FFD98B;
 			}
-			.danger {
+			.notice {
+				color: #31708f;
+			}
+			.light-gray {
+				color: #F7F7F7;
+			}
+			.list-group-item:hover .light-gray {
+				color: #F0EAEA;
+			}
+			.fa-stack {
 				margin-left: -10px;
 				margin-right: 6px;
+			}
+			.server-info {
+			}
+			.server-charts {
+				margin-top: 10px;
 			}
 		</style>
 	</head>
@@ -44,50 +58,121 @@
 		</header>
 		<div class="list-group">
 			<a href="#" class="list-group-item">
-				<i class="fa fa-hdd-o fa-5x pull-left bad"></i>
-				<h4 class="list-group-item-heading">Web-1</h4>
-				<p class="list-group-item-text">56.23.2.482</p>
-				<p class="list-group-item-text">20ms</p>
-				<p class="list-group-item-text">
-					60 seconds ago
-				</p>
+				<div class="server-info">
+					<span class="fa-stack fa-lg fa-3x pull-left">
+						<i class="fa fa-hdd-o fa-stack-2x"></i>
+						<i class="fa fa-exclamation fa-stack-1x bad"></i>
+					</span>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<h4 class="list-group-item-heading">Web-1</h4>
+					<p class="list-group-item-text">56.23.2.482</p>
+					<p class="list-group-item-text">20ms</p>
+					<p class="list-group-item-text">60 seconds ago</p>
+				</div>
+				<div class="server-charts hide">
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+				</div>
 			</a>
 			<a href="#" class="list-group-item">
-				<i class="fa fa-hdd-o fa-5x pull-left good"></i>
-				<h4 class="list-group-item-heading">Web-2</h4>
-				<p class="list-group-item-text">52.482.70.21</p>
-				<p class="list-group-item-text">23ms</p>
-				<p class="list-group-item-text">50 seconds ago</p>				
+				<div class="server-info">
+					<span class="fa-stack fa-lg fa-3x pull-left">
+						<i class="fa fa-hdd-o fa-stack-2x"></i>
+						<i class="fa fa-check fa-stack-1x good"></i>
+					</span>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<h4 class="list-group-item-heading">Web-2</h4>
+					<p class="list-group-item-text">52.482.70.21</p>
+					<p class="list-group-item-text">23ms</p>
+					<p class="list-group-item-text">50 seconds ago</p>
+				</div>
+				<div class="server-charts hide">
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+				</div>
 			</a>
 			<a href="#" class="list-group-item">
-				<i class="fa fa-refresh fa-spin fa-5x pull-left warning"></i>
-				<h4 class="list-group-item-heading">DB-1</h4>
-				<p class="list-group-item-text">90.42.322.482</p>
-				<p class="list-group-item-text">25ms</p>
-				<p class="list-group-item-text">34 seconds ago</p>
+				<div class="server-info">
+					<span class="fa-stack fa-lg fa-3x pull-left">
+						<i class="fa fa-hdd-o fa-stack-2x"></i>
+						<i class="fa fa-refresh fa-spin fa-stack-1x notice"></i>
+					</span>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<h4 class="list-group-item-heading">DB-1</h4>
+					<p class="list-group-item-text">90.42.322.482</p>
+					<p class="list-group-item-text">25ms</p>
+					<p class="list-group-item-text">34 seconds ago</p>
+				</div>
+				<div class="server-charts hide">
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+				</div>
 			</a>
 			<a href="#" class="list-group-item">
-				<span class="fa-stack fa-lg fa-3x pull-left danger">
-					<i class="fa fa-hdd-o fa-stack-1x"></i>
-					<i class="fa fa-ban fa-stack-2x text-danger"></i>
-				</span>
-				<h4 class="list-group-item-heading">Redis-1</h4>
-				<p class="list-group-item-text">52.482.12.4</p>
-				<p class="list-group-item-text">Unresponsive!</p>
-				<p class="list-group-item-text">56 seconds ago</p>
+				<div class="server-info">
+					<span class="fa-stack fa-lg fa-3x pull-left">
+						<i class="fa fa-hdd-o fa-stack-2x"></i>
+						<i class="fa fa-exclamation fa-stack-1x bad"></i>
+					</span>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<h4 class="list-group-item-heading">Redis-1</h4>
+					<p class="list-group-item-text">52.482.12.4</p>
+					<p class="list-group-item-text">Unresponsive!</p>
+					<p class="list-group-item-text">56 seconds ago</p>
+				</div>
+				<div class="server-charts">
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+				</div>
 			</a>
 			<a href="#" class="list-group-item">
-				<i class="fa fa-hdd-o fa-5x pull-left good"></i>
-				<h4 class="list-group-item-heading">LB-1</h4>
-				<p class="list-group-item-text">90.785.23.4</p>
-				<p class="list-group-item-text">80ms</p>
-				<p class="list-group-item-text">45 seconds ago</p>
+				<div class="server-info">
+					<span class="fa-stack fa-lg fa-3x pull-left">
+						<i class="fa fa-hdd-o fa-stack-2x"></i>
+						<i class="fa fa-check fa-stack-1x good"></i>
+					</span>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<h4 class="list-group-item-heading">LB-1</h4>
+					<p class="list-group-item-text">90.785.23.4</p>
+					<p class="list-group-item-text">80ms</p>
+					<p class="list-group-item-text">45 seconds ago</p>
+				</div>
+				<div class="server-charts">
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+					<p>Block text</p>
+				</div>
 			</a>
 		</div>
 		<!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>-->
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script>
+			$(document).ready(function () {
+				$('.list-group-item').click(function (event) {
+					event.preventDefault();
+					var server_info = $($(this).find('.server-charts')[0]),
+						arrow_indicator = $($(this).find('.arrow-indicator')[0]);
+					if (server_info.is(':visible')) {
+						server_info.slideUp(100, function () {
+							arrow_indicator.removeClass('fa-angle-down').addClass('fa-angle-left');
+						});
+					} else {
+						server_info.slideDown(100, function () {
+							arrow_indicator.removeClass('fa-angle-left').addClass('fa-angle-down');
+						});
+					}
+				});
+			});
 		</script>
 	</body>
 </html>
