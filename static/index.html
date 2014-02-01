@@ -12,9 +12,29 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<style>
-			body {
-				padding-left: 25%;
-				padding-right: 25%;
+			@media (min-width: 1250px) {
+				body {
+					padding-left: 25%;
+					padding-right: 25%;
+				}
+			}
+			@media (min-width: 800px) and (max-width: 1249px) {
+				body {
+					padding-left: 20%;
+					padding-right: 20%;
+				}
+			}
+			@media (min-width: 800px) and (max-width: 1049px) {
+				body {
+					padding-left: 10%;
+					padding-right: 10%;
+				}
+			}
+			@media (max-width: 799px) {
+				body {
+					padding-left: 5%;
+					padding-right: 5%;
+				}
 			}
 			header {
 				padding: 60px;
@@ -46,6 +66,12 @@
 			.server-charts {
 				margin-top: 10px;
 			}
+			/* TODO: Maybe this can be used to show an indicator of severs statusses? */
+			.fa-arrow-up:before {
+				background: -webkit-gradient(linear, left top, left bottom, from(#3C763D), to(#719772));
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}​
 		</style>
 	</head>
 	<body>
@@ -97,7 +123,8 @@
 				<div class="server-info">
 					<span class="fa-stack fa-lg fa-3x pull-left">
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
-						<i class="fa fa-refresh fa-spin fa-stack-1x notice"></i>
+						<i class="fa fa-check fa-stack-1x good"></i>
+						<!--<i class="fa fa-refresh fa-spin fa-stack-1x notice"></i>-->
 					</span>
 					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
 					<h4 class="list-group-item-heading">DB-1</h4>
@@ -124,7 +151,7 @@
 					<p class="list-group-item-text">Unresponsive!</p>
 					<p class="list-group-item-text">56 seconds ago</p>
 				</div>
-				<div class="server-charts">
+				<div class="server-charts hide">
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
@@ -135,7 +162,7 @@
 				<div class="server-info">
 					<span class="fa-stack fa-lg fa-3x pull-left">
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
-						<i class="fa fa-check fa-stack-1x good"></i>
+						<i class="fa fa-question fa-stack-1x warning"></i>
 					</span>
 					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
 					<h4 class="list-group-item-heading">LB-1</h4>
@@ -143,11 +170,14 @@
 					<p class="list-group-item-text">80ms</p>
 					<p class="list-group-item-text">45 seconds ago</p>
 				</div>
-				<div class="server-charts">
+				<div class="server-charts hide">
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
+					<div class="settings">
+						<i class="fa fa-cog"></i> settings
+					</div>
 				</div>
 			</a>
 		</div>
@@ -155,16 +185,42 @@
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script>
+			function sortServers (items) {
+				items.sort(function (a, b) {
+					var element = a.innerHTML;
+					if (element.indexOf('bad') !== -1) {
+						return -2;
+					} else if (element.indexOf('warning') !== -1) {
+						return -1;
+					}
+					return 1;
+				});
+				return items;
+			}
 			$(document).ready(function () {
+				var servers = $('.list-group-item'),
+					servers_sorted = sortServers(servers);
+
+				servers_sorted.each(function () {
+					$(this).appendTo(this.parentNode);
+				});
+
+				$('#new-server').click(function (event) {
+					event.preventDefault();
+
+				});
+
 				$('.list-group-item').click(function (event) {
 					event.preventDefault();
 					var server_info = $($(this).find('.server-charts')[0]),
 						arrow_indicator = $($(this).find('.arrow-indicator')[0]);
+					
 					if (server_info.is(':visible')) {
 						server_info.slideUp(100, function () {
 							arrow_indicator.removeClass('fa-angle-down').addClass('fa-angle-left');
 						});
 					} else {
+						server_info.removeClass('hide');  // TODO: This is not optimal
 						server_info.slideDown(100, function () {
 							arrow_indicator.removeClass('fa-angle-left').addClass('fa-angle-down');
 						});
