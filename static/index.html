@@ -88,62 +88,62 @@
 		<div class="modal fade" id="new-server-modal" tabindex="-1" role="dialog" aria-labelledby="new-server-modal-label" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h3 class="modal-title" id="new-server-modal-label">New server</h3>
-					</div>
-					<div class="modal-body">
-						<div id="new-server-loader-holder" class="text-center">
-							<span class="fa-stack fa-lg fa-4x">
-								<i class="fa fa-hdd-o fa-stack-2x"></i>
-								<i class="fa fa-refresh fa-spin fa-stack-1x good"></i>
-							</span>
-							<h2>Please wait.</h2>
-							<h4>We are adding your server to UPUP</h4>
+					<form id="new-server-form" role="form">
+						<div class="modal-header">
+							<h3 class="modal-title" id="new-server-modal-label">New server</h3>
 						</div>
-						<div id="new-server-result-holder" class="text-center">
-							<span class="fa-stack fa-lg fa-4x">
-								<i class="fa fa-hdd-o fa-stack-2x good"></i>
-								<i class="fa fa-check fa-stack-1x good"></i>
-							</span>
-							<h2>Success!</h2>
-							<h4>Your server has been added to UPUP.<br />You can view it on the main page!</h4>
-							<p><a href="#" id="new-server-modal-reset">Click here to add another one!</a></p>
-						</div>
-						<div id="new-server-form-holder">
-							<h4>Follow the form below to add a new server to UPUP</h4>
-							<form role="form">
+						<div class="modal-body">
+							<div id="new-server-loader-holder" class="text-center">
+								<span class="fa-stack fa-lg fa-4x">
+									<i class="fa fa-hdd-o fa-stack-2x"></i>
+									<i class="fa fa-refresh fa-spin fa-stack-1x good"></i>
+								</span>
+								<h2>Please wait.</h2>
+								<h4>We are adding your server to UPUP</h4>
+							</div>
+							<div id="new-server-result-holder" class="text-center">
+								<span class="fa-stack fa-lg fa-4x">
+									<i class="fa fa-hdd-o fa-stack-2x good"></i>
+									<i class="fa fa-check fa-stack-1x good"></i>
+								</span>
+								<h2>Success!</h2>
+								<h4>Your server has been added to UPUP.<br />You can view it on the main page!</h4>
+								<p><a href="#" id="new-server-modal-reset">Click here to add another one!</a></p>
+							</div>
+							<div id="new-server-form-holder">
+								<h4>Follow the form below to add a new server to UPUP</h4>
 								<div class="form-group">
 									<label for="server-name">Server name</label>
-									<input type="email" class="form-control" id="server-name" placeholder="Enter name">
+									<input type="text" class="form-control" name="name" id="server-name" placeholder="Enter name">
 								</div>
 								<div class="form-group">
 									<label for="server-url">URL</label>
-									<input type="email" class="form-control" id="server-url" placeholder="Enter URL to probe">
+									<input type="text" class="form-control" name="url" id="server-url" placeholder="Enter URL to probe">
 								</div>
 								<div class="form-group">
 									<label for="server-interval">Interval</label>
-									<input type="email" class="form-control" id="server-interval" placeholder="Enter the interval to probe the URL in seconds">
+									<input type="text" class="form-control" name="interval" id="server-interval" placeholder="Enter the interval to probe the URL in seconds">
 								</div>
 								<div class="form-group">
 									<label for="server-timeout">Timeout</label>
-									<input type="email" class="form-control" id="server-timeout" placeholder="Enter the timeout in seconds">
+									<input type="text" class="form-control" name="timeout" id="server-timeout" placeholder="Enter the timeout in seconds">
 								</div>
 								<div class="form-group">
-									<label for="server-timeout">Method</label>
-									<select class="form-control">
+									<label for="server-method">Method</label>
+									<select class="form-control" name="method" id="server-method">
 										<option>GET</option>
 										<option>POST</option>
 										<option>PUT</option>
 										<option>DELETE</option>
 									</select>
 								</div>
-							</form>
+							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" id="new-server-save">Save changes</button>
-					</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary" id="new-server-save">Save changes</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -256,6 +256,7 @@
 		<!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>-->
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/nod.min.js"></script>
 		<script>
 			function sortServers (items) {
 				items.sort(function (a, b) {
@@ -291,12 +292,28 @@
 			}
 			$(document).ready(function () {
 				var servers = $('.list-group-item'),
-					servers_sorted = sortServers(servers);
+					servers_sorted = sortServers(servers),
+					metrics = [
+						[ '#server-name', 'presence', 'You must give your server a name.' ],
+						[ '#server-url', 'presence', 'You must provide a URL to ping.' ],
+						[ '#server-interval', 'integer', 'The interval must be an integer.' ],
+						[ '#server-timeout', 'integer', 'The timeout must be an integer.' ],
+						[ '#server-interval', 'presence', 'You must provide an interval to ping your server.' ],
+						[ '#server-timeout', 'presence', 'You must provide a timeout for your server.' ],
+						[ '#server-method', 'presence', 'Please provide a method to ping your server with.' ]
+					];
 
 				servers_sorted.each(function () {
 					$(this).appendTo(this.parentNode);
 				});
 
+				$('#new-server-form').nod(metrics, {silentSubmit: true});
+
+				$('#new-server-form').on('silentSubmit', function (event, data) {
+					console.log('event', event);
+					console.log('data', data);
+				});
+				
 				$('#new-server-modal').on('hidden.bs.modal', function () {
 					resetModal();
 				});
