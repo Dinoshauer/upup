@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="eng">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,13 +51,16 @@
 			.notice {
 				color: #31708f;
 			}
+			.text {
+				font-weight: bold;
+			}
 			.light-gray {
 				color: #F7F7F7;
 			}
 			.list-group-item:hover .light-gray {
 				color: #F0EAEA;
 			}
-			.fa-stack {
+			.list-group-item .fa-stack {
 				margin-left: -10px;
 				margin-right: 6px;
 			}
@@ -86,11 +89,27 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h3 class="modal-title" id="new-server-modal-label">New server</h3>
 					</div>
 					<div class="modal-body">
-						<div id="form-holder">
+						<div id="new-server-loader-holder" class="text-center">
+							<span class="fa-stack fa-lg fa-4x">
+								<i class="fa fa-hdd-o fa-stack-2x"></i>
+								<i class="fa fa-refresh fa-spin fa-stack-1x good"></i>
+							</span>
+							<h2>Please wait.</h2>
+							<h4>We are adding your server to UPUP</h4>
+						</div>
+						<div id="new-server-result-holder" class="text-center">
+							<span class="fa-stack fa-lg fa-4x">
+								<i class="fa fa-hdd-o fa-stack-2x good"></i>
+								<i class="fa fa-check fa-stack-1x good"></i>
+							</span>
+							<h2>Success!</h2>
+							<h4>Your server has been added to UPUP.<br />You can view it on the main page!</h4>
+							<p><a href="#" id="new-server-modal-reset">Click here to add another one!</a></p>
+						</div>
+						<div id="new-server-form-holder">
 							<h4>Follow the form below to add a new server to UPUP</h4>
 							<form role="form">
 								<div class="form-group">
@@ -123,7 +142,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
+						<button type="button" class="btn btn-primary" id="new-server-save">Save changes</button>
 					</div>
 				</div>
 			</div>
@@ -139,7 +158,7 @@
 					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
 					<h4 class="list-group-item-heading">Web-1</h4>
 					<p class="list-group-item-text">56.23.2.482</p>
-					<p class="list-group-item-text">20ms</p>
+					<p class="list-group-item-text text bad">Unresponsive!</p>
 					<p class="list-group-item-text">60 seconds ago</p>
 				</div>
 				<div class="server-charts hide">
@@ -197,7 +216,7 @@
 					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
 					<h4 class="list-group-item-heading">Redis-1</h4>
 					<p class="list-group-item-text">52.482.12.4</p>
-					<p class="list-group-item-text">Unresponsive!</p>
+					<p class="list-group-item-text text bad">Unresponsive!</p>
 					<p class="list-group-item-text">56 seconds ago</p>
 				</div>
 				<div class="server-charts hide">
@@ -230,6 +249,10 @@
 				</div>
 			</a>
 		</div>
+		<footer>
+			<a href="#" class="pull-left"><i class="fa fa-flask"></i></a>
+			<a href="#" class="pull-right"><i class="fa fa-github-alt"></i></a>
+		</footer>
 		<!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>-->
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
@@ -246,6 +269,26 @@
 				});
 				return items;
 			}
+			function toggleButton (button, enable_always) {
+				if (enable_always) {
+					button.removeAttr('disabled');
+					return;	
+				}
+				if (button.attr('disabled')) {
+					button.removeAttr('disabled');
+					return;
+				}
+				button.attr('disabled', 'disabled');
+			}
+			function resetModal () {
+				if ($('#new-server-form-holder').is(':visible')) {
+					return;
+				} else {
+					$('#new-server-modal .modal-body').children().hide();
+					$('#new-server-form-holder').show();
+					toggleButton($('#new-server-save'), true);
+				}
+			}
 			$(document).ready(function () {
 				var servers = $('.list-group-item'),
 					servers_sorted = sortServers(servers);
@@ -254,9 +297,41 @@
 					$(this).appendTo(this.parentNode);
 				});
 
-				$('#new-server').click(function (event) {
+				$('#new-server-modal').on('hidden.bs.modal', function () {
+					resetModal();
+				});
+				$('#new-server-loader-holder').hide();
+				$('#new-server-result-holder').hide();
+				$('#new-server-modal-reset').click(function (event) {
 					event.preventDefault();
-
+					$('#new-server-result-holder').slideUp('fast', function () {
+						$('#new-server-form-holder').slideDown('fast', function () {
+							toggleButton($('#new-server-save'));
+						});
+					});
+				});
+				$('#new-server-save').click(function (event) {
+					event.preventDefault();
+					var self = $(this);
+					toggleButton(self);
+					$('#new-server-form-holder').slideUp('fast', function () {
+						$('#new-server-loader-holder').slideDown('fast', function () {
+							// Do some ajax stuff and clear the form
+							setTimeout(function () {
+								// When ajax stuff returns response
+								$('#new-server-loader-holder').slideUp('fast', function () {
+									$('#new-server-result-holder').slideDown('fast', function () {
+										if ($('#new-server-form-holder').is(':visible')) {
+											$('#new-server-result-holder a').hide();
+											setTimeout(function () {
+												$('#new-server-result-holder').slideUp('fast');
+											}, 2000);
+										}
+									});
+								});
+							}, 2000);
+						});
+					});
 				});
 
 				$('.list-group-item').click(function (event) {
