@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3 Demo: Making a bar chart with divs</title>
+		<script src="js/d3.v3.min.js"></script>
+		<style type="text/css">
+		
+			div.bar {
+				display: inline-block;
+				width: 20px;
+				height: 75px;	/* Gets overriden by D3-assigned height below */
+				margin-right: 2px;
+				background-color: teal;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+
+			var dataset = [
+							{
+								"timestamp": 1391548749593,
+								"value": 100
+							},
+							{
+								"timestamp": 1391548849593,
+								"value": 80
+							},
+							{
+								"timestamp": 1391548949593,
+								"value": 120
+							},
+							{
+								"timestamp": 1391549049593,
+								"value": 75
+							},
+							{
+								"timestamp": 1391549149593,
+								"value": 122
+							},
+							{
+								"timestamp": 1391549249593,
+								"value": 90
+							},
+							{
+								"timestamp": 1391549349593,
+								"value": 97
+							},
+							{
+								"timestamp": 1391549449593,
+								"value": 160
+							},
+							{
+								"timestamp": 1391549549593,
+								"value": 40
+							},
+							{
+								"timestamp": 1391549649593,
+								"value": 60
+							},
+							{
+								"timestamp": 1391549749593,
+								"value": 76
+							},
+							{
+								"timestamp": 1391549849593,
+								"value": 44
+							},
+							{
+								"timestamp": 1391549949593,
+								"value": 32
+							},
+							{
+								"timestamp": 1391550049593,
+								"value": 45
+							},
+							{
+								"timestamp": 1391550149593,
+								"value": 12
+							},
+							{
+								"timestamp": 1391550149593,
+								"value": 89
+							}
+						];
+
+			// Dimensions of SVG
+			var w = 500,
+				h = 100,
+				barPadding = 5;
+
+			// Create the SVG element
+			var svg = d3.select('body')
+						.append('svg')
+						.attr({
+							width: w,
+							height: h
+						}),
+				xScale = d3.scale.linear()
+						.domain([
+							d3.min(dataset, function (d) {
+								return d.value;
+							}),
+							d3.max(dataset, function (d) {
+								return d.value;
+							})
+						])
+						.range([0, w]),
+				yScale = d3.scale.linear()
+						.domain([
+							d3.min(dataset, function (d) {
+								return d.value;
+							}),
+							d3.max(dataset, function (d) {
+								return d.value;
+							})
+						])
+						.range([0, h]);
+			svg.selectAll('rect')
+				.data(dataset)
+				.enter()
+				.append('rect')
+				.attr({
+					x: function (d, i) {
+						return xScale(d.value);
+						// return i * (w / dataset.length);
+					},
+					y: function (d) {
+						return yScale(d.value);
+						// return h - (d.value * 4);
+					},
+					width: w / dataset.length - barPadding,
+					height: function (d) {
+						return d.value * 4;
+					},
+					fill: function (d) {
+						return "rgb(" + (d.value) + ", " + (d.value) + ", " + (d.value) + ")";
+					}
+				});			
+		</script>
+	</body>
+</html>

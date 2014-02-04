@@ -257,7 +257,13 @@
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/nod.min.js"></script>
+		<script src="js/d3.v3.min.js"></script>
+		<script src="http://dimplejs.org/dist/dimple.v1.1.4.min.js"></script>
 		<script>
+			var data = [78, 87, 34, 120, 54, 87, 34, 64, 330, 87, 34];
+			var server = d3.select('#web-1 .server-info');
+
+
 			function sortServers (items) {
 				items.sort(function (a, b) {
 					var element = a.innerHTML;
