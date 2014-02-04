@@ -113,23 +113,23 @@
 							<div id="new-server-form-holder">
 								<h4>Follow the form below to add a new server to UPUP</h4>
 								<div class="form-group">
-									<label for="server-name">Server name</label>
+									<label class="control-label" for="server-name">Server name</label>
 									<input type="text" class="form-control" name="name" id="server-name" placeholder="Enter name">
 								</div>
 								<div class="form-group">
-									<label for="server-url">URL</label>
+									<label class="control-label" for="server-url">URL</label>
 									<input type="text" class="form-control" name="url" id="server-url" placeholder="Enter URL to probe">
 								</div>
 								<div class="form-group">
-									<label for="server-interval">Interval</label>
+									<label class="control-label" for="server-interval">Interval</label>
 									<input type="text" class="form-control" name="interval" id="server-interval" placeholder="Enter the interval to probe the URL in seconds">
 								</div>
 								<div class="form-group">
-									<label for="server-timeout">Timeout</label>
+									<label class="control-label" for="server-timeout">Timeout</label>
 									<input type="text" class="form-control" name="timeout" id="server-timeout" placeholder="Enter the timeout in seconds">
 								</div>
 								<div class="form-group">
-									<label for="server-method">Method</label>
+									<label class="control-label" for="server-method">Method</label>
 									<select class="form-control" name="method" id="server-method">
 										<option>GET</option>
 										<option>POST</option>
@@ -141,7 +141,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-primary" id="new-server-save">Save changes</button>
+							<button type="submit" class="btn btn-primary" id="new-server-save" disabled>Save changes</button>
 						</div>
 					</form>
 				</div>
@@ -287,7 +287,7 @@
 				} else {
 					$('#new-server-modal .modal-body').children().hide();
 					$('#new-server-form-holder').show();
-					toggleButton($('#new-server-save'), true);
+					$('#new-server-save').attr('disabled', 'disabled');
 				}
 			}
 			$(document).ready(function () {
@@ -307,7 +307,11 @@
 					$(this).appendTo(this.parentNode);
 				});
 
-				$('#new-server-form').nod(metrics, {silentSubmit: true});
+				$('#new-server-form').nod(metrics, {
+					silentSubmit: true,
+					groupSelector: '.form-group',
+					groupClass: 'has-error'
+				});
 
 				$('#new-server-form').on('silentSubmit', function (event, data) {
 					console.log('event', event);
