@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="eng">
 	<head>
@@ -147,9 +146,10 @@
 				</div>
 			</div>
 		</div>
+		<!-- Modal:end -->
 
-		<div class="list-group">
-			<a href="#" class="list-group-item">
+		<div class="list-group" id="collapsible-server-list">
+			<a href="#web-1" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
 				<div class="server-info">
 					<span class="fa-stack fa-lg fa-3x pull-left">
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
@@ -161,14 +161,14 @@
 					<p class="list-group-item-text text bad">Unresponsive!</p>
 					<p class="list-group-item-text">60 seconds ago</p>
 				</div>
-				<div class="server-charts hide">
+				<div class="server-charts collapse" id="web-1">
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 				</div>
 			</a>
-			<a href="#" class="list-group-item">
+			<a href="#web-2" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
 				<div class="server-info">
 					<span class="fa-stack fa-lg fa-3x pull-left">
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
@@ -180,14 +180,14 @@
 					<p class="list-group-item-text">23ms</p>
 					<p class="list-group-item-text">50 seconds ago</p>
 				</div>
-				<div class="server-charts hide">
+				<div class="server-charts collapse" id="web-2">
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 				</div>
 			</a>
-			<a href="#" class="list-group-item">
+			<a href="#db-1" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
 				<div class="server-info">
 					<span class="fa-stack fa-lg fa-3x pull-left">
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
@@ -200,14 +200,14 @@
 					<p class="list-group-item-text">25ms</p>
 					<p class="list-group-item-text">34 seconds ago</p>
 				</div>
-				<div class="server-charts hide">
+				<div class="server-charts collapse" id="db-1">
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 				</div>
 			</a>
-			<a href="#" class="list-group-item">
+			<a href="#redis-1" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
 				<div class="server-info">
 					<span class="fa-stack fa-lg fa-3x pull-left">
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
@@ -219,14 +219,14 @@
 					<p class="list-group-item-text text bad">Unresponsive!</p>
 					<p class="list-group-item-text">56 seconds ago</p>
 				</div>
-				<div class="server-charts hide">
+				<div class="server-charts collapse" id="redis-1">
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
 				</div>
 			</a>
-			<a href="#" class="list-group-item">
+			<a href="#lb-1" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
 				<div class="server-info">
 					<span class="fa-stack fa-lg fa-3x pull-left">
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
@@ -238,7 +238,7 @@
 					<p class="list-group-item-text">80ms</p>
 					<p class="list-group-item-text">45 seconds ago</p>
 				</div>
-				<div class="server-charts hide">
+				<div class="server-charts collapse" id="lb-1">
 					<p>Block text</p>
 					<p>Block text</p>
 					<p>Block text</p>
@@ -355,21 +355,16 @@
 					});
 				});
 
-				$('.list-group-item').click(function (event) {
-					event.preventDefault();
+				$('#collapsible-server-list').on('show.bs.collapse', function () {
 					var server_info = $($(this).find('.server-charts')[0]),
 						arrow_indicator = $($(this).find('.arrow-indicator')[0]);
+					arrow_indicator.removeClass('fa-angle-left').addClass('fa-angle-down');
+				});
 
-					if (server_info.is(':visible')) {
-						server_info.slideUp(100, function () {
-							arrow_indicator.removeClass('fa-angle-down').addClass('fa-angle-left');
-						});
-					} else {
-						server_info.removeClass('hide');  // TODO: This is not optimal
-						server_info.slideDown(100, function () {
-							arrow_indicator.removeClass('fa-angle-left').addClass('fa-angle-down');
-						});
-					}
+				$('#collapsible-server-list').on('hide.bs.collapse', function () {
+					var server_info = $($(this).find('.server-charts')[0]),
+						arrow_indicator = $($(this).find('.arrow-indicator')[0]);
+					arrow_indicator.removeClass('fa-angle-down').addClass('fa-angle-left');
 				});
 			});
 		</script>
