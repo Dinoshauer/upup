@@ -117,7 +117,7 @@
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="server-url">URL</label>
-									<input type="text" class="form-control" name="url" id="server-url" placeholder="Enter URL to probe">
+									<input type="text" class="form-control" name="url" id="server-url" placeholder="http:// - Enter URL to probe">
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="server-interval">Interval</label>
@@ -295,7 +295,7 @@
 					servers_sorted = sortServers(servers),
 					metrics = [
 						[ '#server-name', 'presence', 'You must give your server a name.' ],
-						[ '#server-url', 'presence', 'You must provide a URL to ping.' ],
+						[ '#server-url', /(https:\/\/|http:\/\/)/, 'You must provide a protocol for the url, either http:// or https://' ],
 						[ '#server-interval', 'integer', 'The interval must be an integer.' ],
 						[ '#server-timeout', 'integer', 'The timeout must be an integer.' ],
 						[ '#server-interval', 'presence', 'You must provide an interval to ping your server.' ],
