@@ -15,14 +15,111 @@
 	</head>
 	<body>
 		<script type="text/javascript">
+			var rgb = [
+				'rgb(255, 255, 255)',
+				'rgb(245, 245, 245)',
+				'rgb(240, 240, 240)',
+				'rgb(235, 235, 235)',
+				'rgb(230, 230, 230)',
+				'rgb(225, 225, 225)',
+				'rgb(220, 220, 220)',
+				'rgb(215, 215, 215)',
+				'rgb(210, 210, 210)',
+				'rgb(205, 205, 205)',
+				'rgb(200, 200, 200)',
+				'rgb(195, 195, 195)',
+				'rgb(190, 190, 190)',
+				'rgb(185, 185, 185)',
+				'rgb(180, 180, 180)',
+				'rgb(175, 175, 175)',
+				'rgb(170, 170, 170)',
+				'rgb(165, 165, 165)',
+				'rgb(160, 160, 160)',
+				'rgb(155, 155, 155)',
+				'rgb(150, 150, 150)',
+				'rgb(145, 145, 145)',
+				'rgb(140, 140, 140)',
+				'rgb(135, 135, 135)',
+				'rgb(130, 130, 130)'
+			];
+
 			var t = 1297110663,
 				v = 70,
-				data = d3.range(33).map(next);
+				data = d3.range(20).map(next);
+
+			// var data = [
+			// 				{
+			// 					timestamp: 1391548749593,
+			// 					value: 100
+			// 				},
+			// 				{
+			// 					timestamp: 1391548849593,
+			// 					value: 80
+			// 				},
+			// 				{
+			// 					timestamp: 1391548949593,
+			// 					value: 120
+			// 				},
+			// 				{
+			// 					timestamp: 1391549049593,
+			// 					value: 75
+			// 				},
+			// 				{
+			// 					timestamp: 1391549149593,
+			// 					value: 122
+			// 				},
+			// 				{
+			// 					timestamp: 1391549249593,
+			// 					value: 90
+			// 				},
+			// 				{
+			// 					timestamp: 1391549349593,
+			// 					value: 97
+			// 				},
+			// 				{
+			// 					timestamp: 1391549449593,
+			// 					value: 160
+			// 				},
+			// 				{
+			// 					timestamp: 1391549549593,
+			// 					value: 40
+			// 				},
+			// 				{
+			// 					timestamp: 1391549649593,
+			// 					value: 60
+			// 				},
+			// 				{
+			// 					timestamp: 1391549749593,
+			// 					value: 76
+			// 				},
+			// 				{
+			// 					timestamp: 1391549849593,
+			// 					value: 44
+			// 				},
+			// 				{
+			// 					timestamp: 1391549949593,
+			// 					value: 32
+			// 				},
+			// 				{
+			// 					timestamp: 1391550049593,
+			// 					value: 45
+			// 				},
+			// 				{
+			// 					timestamp: 1391550149593,
+			// 					value: 12
+			// 				},
+			// 				{
+			// 					timestamp: 1391550149593,
+			// 					value: 89
+			// 				}
+			// 			];
 
 			function next () {
+				var vv = v = ~~Math.max(88, Math.min(340, v + 10 * (Math.random() - .5)));
+				console.log(vv)
 				return {
 					time: ++t,
-					value: v = ~~Math.max(10, Math.min(90, v + 10 * (Math.random() - .5)))
+					value: vv
 				};
 			}
 
@@ -52,8 +149,8 @@
 							height: function (d) {
 								return y(d.value);
 							},
-							fill: function (d) {
-								return "rgb(" + (d.value / 4) + ", " + (d.value / 4) + ", " + (d.value / 4) + ")";
+							fill: function (d, i) {
+								return rgb[i];
 							}
 						})
 					.transition()
@@ -85,8 +182,8 @@
 					.remove();
 			}
 
-			var w = 10,
-				h = 80;
+			var w = 30,
+				h = 100;
 
 			var x = d3.scale.linear()
 				.domain([0, 1])
@@ -117,8 +214,8 @@
 						height: function (d) {
 							return y(d.value);
 						},
-						fill: function (d) {
-							return "rgb(" + (d.value) + ", " + (d.value) + ", " + (d.value) + ")";
+						fill: function (d, i) {
+							return rgb[i];
 						}
 					});
 			chart.append('line')
@@ -129,75 +226,6 @@
 					y2: h - .5
 				})
 				.style('stroke', 'red');
-
-
-
-			// var dataset = [
-			// 				{
-			// 					"timestamp": 1391548749593,
-			// 					"value": 100
-			// 				},
-			// 				{
-			// 					"timestamp": 1391548849593,
-			// 					"value": 80
-			// 				},
-			// 				{
-			// 					"timestamp": 1391548949593,
-			// 					"value": 120
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549049593,
-			// 					"value": 75
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549149593,
-			// 					"value": 122
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549249593,
-			// 					"value": 90
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549349593,
-			// 					"value": 97
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549449593,
-			// 					"value": 160
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549549593,
-			// 					"value": 40
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549649593,
-			// 					"value": 60
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549749593,
-			// 					"value": 76
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549849593,
-			// 					"value": 44
-			// 				},
-			// 				{
-			// 					"timestamp": 1391549949593,
-			// 					"value": 32
-			// 				},
-			// 				{
-			// 					"timestamp": 1391550049593,
-			// 					"value": 45
-			// 				},
-			// 				{
-			// 					"timestamp": 1391550149593,
-			// 					"value": 12
-			// 				},
-			// 				{
-			// 					"timestamp": 1391550149593,
-			// 					"value": 89
-			// 				}
-			// 			];
 
 			// // Dimensions of SVG
 			// var w = 500,
