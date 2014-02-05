@@ -16,103 +16,103 @@
 	<body>
 		<script type="text/javascript">
 			var rgb = [
-				'rgb(255, 255, 255)',
-				'rgb(245, 245, 245)',
-				'rgb(240, 240, 240)',
-				'rgb(235, 235, 235)',
-				'rgb(230, 230, 230)',
-				'rgb(225, 225, 225)',
-				'rgb(220, 220, 220)',
-				'rgb(215, 215, 215)',
-				'rgb(210, 210, 210)',
-				'rgb(205, 205, 205)',
-				'rgb(200, 200, 200)',
-				'rgb(195, 195, 195)',
-				'rgb(190, 190, 190)',
-				'rgb(185, 185, 185)',
-				'rgb(180, 180, 180)',
-				'rgb(175, 175, 175)',
-				'rgb(170, 170, 170)',
-				'rgb(165, 165, 165)',
-				'rgb(160, 160, 160)',
-				'rgb(155, 155, 155)',
-				'rgb(150, 150, 150)',
-				'rgb(145, 145, 145)',
-				'rgb(140, 140, 140)',
-				'rgb(135, 135, 135)',
-				'rgb(130, 130, 130)'
+				'rgba(255, 255, 255, 0.5)',
+				'rgba(245, 245, 245, 0.5)',
+				'rgba(245, 245, 245, 0.5)',
+				'rgba(240, 240, 240, 0.5)',
+				'rgba(240, 240, 240, 0.5)',
+				'rgba(235, 235, 235, 0.5)',
+				'rgba(235, 235, 235, 0.5)',
+				'rgba(230, 230, 230, 0.5)',
+				'rgba(230, 230, 230, 0.5)',
+				'rgba(225, 225, 225, 0.5)',
+				'rgba(225, 225, 225, 0.5)',
+				'rgba(220, 220, 220, 0.5)',
+				'rgba(220, 220, 220, 0.5)',
+				'rgba(215, 215, 215, 0.5)',
+				'rgba(215, 215, 215, 0.5)',
+				'rgba(210, 210, 210, 0.5)',
+				'rgba(210, 210, 210, 0.5)',
+				'rgba(205, 205, 205, 0.5)',
+				'rgba(205, 205, 205, 0.5)',
+				'rgba(200, 200, 200, 0.5)',
+				'rgba(200, 200, 200, 0.5)',
+				'rgba(195, 195, 195, 0.5)',
+				'rgba(195, 195, 195, 0.5)',
+				'rgba(190, 190, 190, 0.5)',
+				'rgba(190, 190, 190, 0.5)'
 			];
 
 			var t = 1297110663,
 				v = 70,
 				data = d3.range(20).map(next);
 
-			// var data = [
-			// 				{
-			// 					timestamp: 1391548749593,
-			// 					value: 100
-			// 				},
-			// 				{
-			// 					timestamp: 1391548849593,
-			// 					value: 80
-			// 				},
-			// 				{
-			// 					timestamp: 1391548949593,
-			// 					value: 120
-			// 				},
-			// 				{
-			// 					timestamp: 1391549049593,
-			// 					value: 75
-			// 				},
-			// 				{
-			// 					timestamp: 1391549149593,
-			// 					value: 122
-			// 				},
-			// 				{
-			// 					timestamp: 1391549249593,
-			// 					value: 90
-			// 				},
-			// 				{
-			// 					timestamp: 1391549349593,
-			// 					value: 97
-			// 				},
-			// 				{
-			// 					timestamp: 1391549449593,
-			// 					value: 160
-			// 				},
-			// 				{
-			// 					timestamp: 1391549549593,
-			// 					value: 40
-			// 				},
-			// 				{
-			// 					timestamp: 1391549649593,
-			// 					value: 60
-			// 				},
-			// 				{
-			// 					timestamp: 1391549749593,
-			// 					value: 76
-			// 				},
-			// 				{
-			// 					timestamp: 1391549849593,
-			// 					value: 44
-			// 				},
-			// 				{
-			// 					timestamp: 1391549949593,
-			// 					value: 32
-			// 				},
-			// 				{
-			// 					timestamp: 1391550049593,
-			// 					value: 45
-			// 				},
-			// 				{
-			// 					timestamp: 1391550149593,
-			// 					value: 12
-			// 				},
-			// 				{
-			// 					timestamp: 1391550149593,
-			// 					value: 89
-			// 				}
-			// 			];
+			var data = [
+							{
+								timestamp: 1391548749593,
+								value: 100
+							},
+							{
+								timestamp: 1391548849593,
+								value: 80
+							},
+							{
+								timestamp: 1391548949593,
+								value: 120
+							},
+							{
+								timestamp: 1391549049593,
+								value: 75
+							},
+							{
+								timestamp: 1391549149593,
+								value: 122
+							},
+							{
+								timestamp: 1391549249593,
+								value: 90
+							},
+							{
+								timestamp: 1391549349593,
+								value: 97
+							},
+							{
+								timestamp: 1391549449593,
+								value: 160
+							},
+							{
+								timestamp: 1391549549593,
+								value: 40
+							},
+							{
+								timestamp: 1391549649593,
+								value: 60
+							},
+							{
+								timestamp: 1391549749593,
+								value: 76
+							},
+							{
+								timestamp: 1391549849593,
+								value: 44
+							},
+							{
+								timestamp: 1391549949593,
+								value: 32
+							},
+							{
+								timestamp: 1391550049593,
+								value: 45
+							},
+							{
+								timestamp: 1391550149593,
+								value: 12
+							},
+							{
+								timestamp: 1391550149593,
+								value: 89
+							}
+						];
 
 			function next () {
 				var vv = v = ~~Math.max(88, Math.min(340, v + 10 * (Math.random() - .5)));
@@ -123,11 +123,11 @@
 				};
 			}
 
-			setInterval(function () {
-				data.shift();
-				data.push(next());
-				redraw();
-			}, 1500);
+			// setInterval(function () {
+			// 	data.shift();
+			// 	data.push(next());
+			// 	redraw();
+			// }, 1500);
 
 			function redraw () {
 				// Use time as key to join the new data to the old rects / nodes
@@ -182,15 +182,15 @@
 					.remove();
 			}
 
-			var w = 30,
+			var w = 50,
 				h = 100;
 
 			var x = d3.scale.linear()
 				.domain([0, 1])
-				.range([0, w]);
+				.range([0, w + 5]);
 			
 			var y = d3.scale.linear()
-				.domain([0, 100])
+				.domain([0, 300])
 				.rangeRound([0, h]);
 
 			var chart = d3.select('body').append('svg')
@@ -218,14 +218,15 @@
 							return rgb[i];
 						}
 					});
-			chart.append('line')
-				.attr({
-					x1: 0,
-					x2: w * data.length,
-					y1: h - .5,
-					y2: h - .5
-				})
-				.style('stroke', 'red');
+			// If you need a line \/
+			// chart.append('line')
+			// 	.attr({
+			// 		x1: 0,
+			// 		x2: w * data.length,
+			// 		y1: h - .5,
+			// 		y2: h - .5
+			// 	})
+			// 	.style('stroke', 'red');
 
 			// // Dimensions of SVG
 			// var w = 500,
