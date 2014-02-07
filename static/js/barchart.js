@@ -128,7 +128,7 @@ d3.chart('BarChart', {
 			insert : function() {
 				return this.append('rect')
 					.classed('bar', true)
-				.attr('fill', function (d, i) { return rgb[i]; });
+					.attr('fill', function (d, i) { return rgb[i]; });
 			}
 		});
 
@@ -148,7 +148,8 @@ d3.chart('BarChart', {
 					.attr('height', function(d) {
 						//return chart.h - chart.margins.bottom - chart.y(chart.datamax - d);
 						return chart.y(chart.datamax - d);
-					});
+					})
+					.transition().duration(1000);
 		};
 
 		chart.layer('bars').on('enter', onEnter);
