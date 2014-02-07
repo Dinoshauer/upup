@@ -118,7 +118,7 @@ d3.chart('BarChart', {
 
 				// adjust the y domain - find the max in the data.
 				chart.datamax = chart.usermax || d3.max(data, function(d) { 
-					return d.value; 
+					return d; 
 				});
 				chart.y.domain([0, chart.datamax]);
 
@@ -139,15 +139,15 @@ d3.chart('BarChart', {
 						return chart.x(i) - 0.5;
 					})
 					.attr('y', function(d) {
-						return chart.h - chart.margins.bottom - chart.margins.top - chart.y(chart.datamax - d.value) - 0.5;
+						return chart.h - chart.margins.bottom - chart.margins.top - chart.y(chart.datamax - d) - 0.5;
 					})
 					.attr('val', function(d) {
-						return d.value;
+						return d;
 					})
 					.attr('width', chart.bar_width)
 					.attr('height', function(d) {
-						//return chart.h - chart.margins.bottom - chart.y(chart.datamax - d.value);
-						return chart.y(chart.datamax - d.value);
+						//return chart.h - chart.margins.bottom - chart.y(chart.datamax - d);
+						return chart.y(chart.datamax - d);
 					});
 		};
 
@@ -207,18 +207,3 @@ d3.chart('BarChart', {
 		return this;
 	}
 });
-
-var h = 100,
-	w = 800,
-	aspect = h / w;
-
-var barchart = d3.select('body')
-	.append('svg')
-	.attr({
-
-		height: h,
-		width: w,
-	viewBox: '0 0 ' + w + ' ' + h,
-	preserveAspectRatio: 'xMinYMin'
-	})
-	.chart('BarChart');

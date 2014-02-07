@@ -11,6 +11,9 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<style>
+			html {
+				overflow-y: scroll;
+			}
 			@media (min-width: 1250px) {
 				body {
 					padding-left: 25%;
@@ -56,6 +59,9 @@
 			.light-gray {
 				color: #F7F7F7;
 			}
+			.list-group-item {
+				padding-bottom: 0;
+			}
 			.list-group-item:hover .light-gray {
 				color: #F0EAEA;
 			}
@@ -64,6 +70,12 @@
 				margin-right: 6px;
 			}
 			.server-info {
+				position: absolute;
+				z-index: 1;
+				width: 100%;
+				top: 0;
+				bottom: 0;
+				padding: 20px 0 0 10px;
 			}
 			.server-charts {
 				margin-top: 10px;
@@ -74,6 +86,17 @@
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 			}​
+			svg {
+				margin-bottom: -6px;
+				position: absolute !important;
+				top: 0px !important;
+				left: 15px !important;
+			}
+			.arrow-placement {
+				position: absolute;
+				right: 30px;
+				top: 20px;
+			}
 		</style>
 	</head>
 	<body>
@@ -155,12 +178,13 @@
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
 						<i class="fa fa-exclamation fa-stack-1x bad"></i>
 					</span>
-					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-placement arrow-indicator"></i>
 					<h4 class="list-group-item-heading">Web-1</h4>
 					<p class="list-group-item-text">56.23.2.482</p>
 					<p class="list-group-item-text text bad">Unresponsive!</p>
 					<p class="list-group-item-text">60 seconds ago</p>
 				</div>
+				<svg height="100"></svg>
 				<div class="server-charts collapse" id="web-1">
 					<p>Block text</p>
 					<p>Block text</p>
@@ -174,12 +198,13 @@
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
 						<i class="fa fa-check fa-stack-1x good"></i>
 					</span>
-					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-placement arrow-indicator"></i>
 					<h4 class="list-group-item-heading">Web-2</h4>
 					<p class="list-group-item-text">52.482.70.21</p>
 					<p class="list-group-item-text">23ms</p>
 					<p class="list-group-item-text">50 seconds ago</p>
 				</div>
+				<svg height="100"></svg>
 				<div class="server-charts collapse" id="web-2">
 					<p>Block text</p>
 					<p>Block text</p>
@@ -194,12 +219,13 @@
 						<i class="fa fa-check fa-stack-1x good"></i>
 						<!--<i class="fa fa-refresh fa-spin fa-stack-1x notice"></i>-->
 					</span>
-					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-placement arrow-indicator"></i>
 					<h4 class="list-group-item-heading">DB-1</h4>
 					<p class="list-group-item-text">90.42.322.482</p>
 					<p class="list-group-item-text">25ms</p>
 					<p class="list-group-item-text">34 seconds ago</p>
 				</div>
+				<svg height="100"></svg>
 				<div class="server-charts collapse" id="db-1">
 					<p>Block text</p>
 					<p>Block text</p>
@@ -213,12 +239,13 @@
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
 						<i class="fa fa-exclamation fa-stack-1x bad"></i>
 					</span>
-					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-placement arrow-indicator"></i>
 					<h4 class="list-group-item-heading">Redis-1</h4>
 					<p class="list-group-item-text">52.482.12.4</p>
 					<p class="list-group-item-text text bad">Unresponsive!</p>
 					<p class="list-group-item-text">56 seconds ago</p>
 				</div>
+				<svg height="100"></svg>
 				<div class="server-charts collapse" id="redis-1">
 					<p>Block text</p>
 					<p>Block text</p>
@@ -232,12 +259,13 @@
 						<i class="fa fa-hdd-o fa-stack-2x"></i>
 						<i class="fa fa-question fa-stack-1x warning"></i>
 					</span>
-					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-indicator"></i>
+					<i class="fa fa-angle-left fa-5x pull-right light-gray arrow-placement arrow-indicator"></i>
 					<h4 class="list-group-item-heading">LB-1</h4>
 					<p class="list-group-item-text">90.785.23.4</p>
 					<p class="list-group-item-text">80ms</p>
 					<p class="list-group-item-text">45 seconds ago</p>
 				</div>
+				<svg height="100"></svg>
 				<div class="server-charts collapse" id="lb-1">
 					<p>Block text</p>
 					<p>Block text</p>
@@ -250,20 +278,19 @@
 			</a>
 		</div>
 		<footer>
-			<a href="#" class="pull-left"><i class="fa fa-flask"></i></a>
-			<a href="#" class="pull-right"><i class="fa fa-github-alt"></i></a>
+			<div id="footer-links" class="pull-right">
+				<a href="#"><i class="fa fa-flask"></i></a>
+				<a href="#"><i class="fa fa-github-alt"></i></a>
+			</div>
 		</footer>
 		<!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>-->
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/nod.min.js"></script>
 		<script src="js/d3.v3.min.js"></script>
-		<script src="http://dimplejs.org/dist/dimple.v1.1.4.min.js"></script>
+		<script src="js/d3.chart.min.js"></script>
+		<script src="js/barchart.js"></script>
 		<script>
-			var data = [78, 87, 34, 120, 54, 87, 34, 64, 330, 87, 34];
-			var server = d3.select('#web-1 .server-info');
-
-
 			function sortServers (items) {
 				items.sort(function (a, b) {
 					var element = a.innerHTML;
@@ -297,6 +324,50 @@
 				}
 			}
 			$(document).ready(function () {
+
+				$('.list-group-item').each(function () {
+					var self = $(this),
+						h = self.height(),
+						w = self.width(),
+						aspect = (h / w),
+						svg = self.find('svg').get(0);
+
+					var barchart = d3.select(svg)
+						.attr({
+							height: 100,
+							width: w,
+							viewBox: '0 0 ' + w + ' ' + 100,
+							preserveAspectRatio: 'xMinYMin'
+						})
+						.chart('BarChart');
+					var data = [78, 87, 34, 120, 54, 87, 34, 64, 34, 120, 54, 87, 34, 64, 34, 120, 54, 87, 34, 64, 34, 34, 120, 54, 87, 34, 64, 120, 54, 87, 34, 64, 330, 87, 34];
+
+					barchart.draw(data);
+				});
+				// var h = 100,
+				// 	w = 800,
+				// 	aspect = h / w;
+
+				// var barchart = d3.select('body')
+				// 	.append('svg')
+				// 	.attr({
+				// 		height: h,
+				// 		width: w,
+				// 	viewBox: '0 0 ' + w + ' ' + h,
+				// 	preserveAspectRatio: 'xMinYMin'
+				// 	})
+				// 	.chart('BarChart');
+
+				var someChart = $('Barchart');
+
+				$(window).on("resize", function() {
+					var targetWidth = someChart.parent().width();
+					someChart.attr("width", targetWidth);
+					someChart.attr("height", targetWidth / aspect);
+				});
+
+
+
 				var servers = $('.list-group-item'),
 					servers_sorted = sortServers(servers),
 					metrics = [
@@ -361,16 +432,15 @@
 					});
 				});
 
-				$('#collapsible-server-list').on('show.bs.collapse', function () {
-					var server_info = $($(this).find('.server-charts')[0]),
-						arrow_indicator = $($(this).find('.arrow-indicator')[0]);
-					arrow_indicator.removeClass('fa-angle-left').addClass('fa-angle-down');
-				});
-
-				$('#collapsible-server-list').on('hide.bs.collapse', function () {
-					var server_info = $($(this).find('.server-charts')[0]),
-						arrow_indicator = $($(this).find('.arrow-indicator')[0]);
-					arrow_indicator.removeClass('fa-angle-down').addClass('fa-angle-left');
+				$('.list-group-item').on('click', function (a, b, c) {
+					var self = $(this),
+						arrow_indicator = $(self.find('.arrow-indicator').get(0)),
+						server_charts = $(self.find('.server-charts').get(0));
+					if (server_charts.is(':visible')) {
+						arrow_indicator.removeClass('fa-angle-down').addClass('fa-angle-left');
+					} else {
+						arrow_indicator.removeClass('fa-angle-left').addClass('fa-angle-down');
+					}
 				});
 			});
 		</script>
