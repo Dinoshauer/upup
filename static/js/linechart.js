@@ -5,6 +5,7 @@ function LineChart (data, chart) {
 	this.height = chart.height || 100;
 	this.width = chart.width || 400;
 	this.target = chart.target || 'body';
+	this.specialTextAppendage = chart.specialTextAppendage || 'ms';
 	this.yLabelClass = chart.classes.yLabelClass || 'y-label';
 	this.yTicksClass = chart.classes.yTicksClass || 'y-ticks';
 	this.specialTextClass = chart.classes.specialTextClass || 'special-text';
@@ -55,10 +56,10 @@ LineChart.prototype = {
 		this.g.append('text')
 			.attr({
 				class: self.specialTextClass,
-				y: -50,
+				y: -2,
 				x: 0
 			})
-			.text(this.data[this.data.length - 1] + 'ms');
+			.text(this.data[this.data.length - 1] + self.specialTextAppendage);
 
 		this.g.append("svg:path").attr("d", this.line(this.data));
 	}

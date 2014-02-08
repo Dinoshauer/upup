@@ -77,8 +77,8 @@
 				bottom: 0;
 				padding: 20px 0 0 10px;
 			}
-			.server-charts {
-				margin-top: 10px;
+			.server-charts div {
+				margin: 20px 0 20px 0;
 			}
 			/* TODO: Maybe this can be used to show an indicator of severs statusses? */
 			.fa-arrow-up:before {
@@ -91,6 +91,26 @@
 				position: absolute !important;
 				top: 0px !important;
 				left: 15px !important;
+			}
+			path {
+			    stroke: rgb(0, 0, 0);
+			    stroke-width: 2;
+			    fill: none;
+			}
+
+			line {
+			    stroke: rgb(236, 236, 236);
+			}
+
+			text {
+			    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+			    font-size: 15px;
+			    fill: rgb(200, 200, 200);
+			}
+
+			.special-text {
+			    font-size: 65px;
+			    font-weight: bolder;
 			}
 			.arrow-placement {
 				position: absolute;
@@ -170,7 +190,6 @@
 			</div>
 		</div>
 		<!-- Modal:end -->
-
 		<div class="list-group" id="collapsible-server-list">
 			<a href="#web-1" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
 				<div class="server-info">
@@ -186,10 +205,12 @@
 				</div>
 				<svg height="100"></svg>
 				<div class="server-charts collapse" id="web-1">
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
+					<div class="response-time">
+						<h4><strong>Response Time</strong></h4>
+					</div>
+					<div class="availability">
+						<h4><strong>Availability</strong></h4>
+					</div>
 				</div>
 			</a>
 			<a href="#web-2" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
@@ -206,10 +227,12 @@
 				</div>
 				<svg height="100"></svg>
 				<div class="server-charts collapse" id="web-2">
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
+					<div class="response-time">
+						<h4><strong>Response Time</strong></h4>
+					</div>
+					<div class="availability">
+						<h4><strong>Availability</strong></h4>
+					</div>
 				</div>
 			</a>
 			<a href="#db-1" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
@@ -227,10 +250,12 @@
 				</div>
 				<svg height="100"></svg>
 				<div class="server-charts collapse" id="db-1">
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
+					<div class="response-time">
+						<h4><strong>Response Time</strong></h4>
+					</div>
+					<div class="availability">
+						<h4><strong>Availability</strong></h4>
+					</div>
 				</div>
 			</a>
 			<a href="#redis-1" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
@@ -247,10 +272,12 @@
 				</div>
 				<svg height="100"></svg>
 				<div class="server-charts collapse" id="redis-1">
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
+					<div class="response-time">
+						<h4><strong>Response Time</strong></h4>
+					</div>
+					<div class="availability">
+						<h4><strong>Availability</strong></h4>
+					</div>
 				</div>
 			</a>
 			<a href="#lb-1" class="list-group-item" data-toggle="collapse" data-parent="#collapsible-server-list">
@@ -267,10 +294,12 @@
 				</div>
 				<svg height="100"></svg>
 				<div class="server-charts collapse" id="lb-1">
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
-					<p>Block text</p>
+					<div class="response-time">
+						<h4><strong>Response Time</strong></h4>
+					</div>
+					<div class="availability">
+						<h4><strong>Availability</strong></h4>
+					</div>
 					<div class="settings">
 						<i class="fa fa-cog"></i> settings
 					</div>
@@ -290,6 +319,7 @@
 		<script src="js/d3.v3.min.js"></script>
 		<script src="js/d3.chart.min.js"></script>
 		<script src="js/barchart.js"></script>
+		<script src="js/linechart.js"></script>
 		<script>
 			function sortServers (items) {
 				items.sort(function (a, b) {
@@ -343,20 +373,39 @@
 					var data = [78, 87, 34, 120, 54, 87, 34, 64, 34, 120, 54, 87, 34, 64, 34, 120, 54, 87, 34, 64, 34, 34, 120, 54, 87, 34, 64, 120, 54, 87, 34, 64, 330, 87, 34];
 
 					barchart.draw(data);
-				});
-				// var h = 100,
-				// 	w = 800,
-				// 	aspect = h / w;
 
-				// var barchart = d3.select('body')
-				// 	.append('svg')
-				// 	.attr({
-				// 		height: h,
-				// 		width: w,
-				// 	viewBox: '0 0 ' + w + ' ' + h,
-				// 	preserveAspectRatio: 'xMinYMin'
-				// 	})
-				// 	.chart('BarChart');
+					var response_time_options = {
+							width: self.width(),
+							height: 100,
+							margin: {
+								top: 0,
+								bottom: 0,
+								left: 0,
+								right: 0
+							},
+							target: self.find('.response-time').get(0),
+							classes: {}
+						},
+						response_time = new LineChart(data, response_time_options);
+					response_time.draw();
+
+					var availability_options = {
+							width: self.width(),
+							height: 80,
+							margin: {
+								top: 0,
+								bottom: 1,
+								left: 0,
+								right: 0
+							},
+							target: self.find('.availability').get(0),
+							classes: {},
+							specialTextAppendage: '%'
+						},
+						availability_data = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 	100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+						availability = new LineChart(availability_data, availability_options);
+					availability.draw();
+				});
 
 				var someChart = $('Barchart');
 
