@@ -1,54 +1,65 @@
-var data = [432, 123, 432,123 ,765,234,234,656,800,123,431,543,652],
-	w = 800,
-	h = 100,
-	margin = 10,
-	y = d3.scale.linear()
-		.domain([0, d3.max(data)])
-		.range([0 + margin, h - margin]),
-	x = d3.scale.linear()
-		.domain([0, data.length])
-		.range([0 + margin, w - margin]);
+function LineChart (data, chart) {
+	this.data = data;
 
-var vis = d3.select("body")
-	.append("svg:svg")
-	.attr("width", w)
-	.attr("height", h);
+	this.margin = chart.margin || { top: 0, bottom: 0, left: 0, right: 0 };
+	this.height = chart.height || 100;
+	this.width = chart.width || 400;
+	this.target = chart.target || 'body';
+	this.yLabelClass = chart.classes.yLabelClass || 'y-label';
+	this.yTicksClass = chart.classes.yTicksClass || 'y-ticks';
+	this.specialTextClass = chart.classes.specialTextClass || 'special-text';
+		
+	this.y = d3.scale.linear()
+		.domain([0, d3.max(this.data)])
+		.range([this.margin.bottom, this.height - this.margin.bottom]);
+	
+	this.x = d3.scale.linear()
+		.domain([0, this.data.length])
+		.range([this.margin.left, this.width - this.margin.left]);
+	
+	this.svg = d3.select(this.target)
+		.append("svg:svg")
+		.attr("width", this.width)
+		.attr("height", this.height);
 
-var g = vis.append("svg:g")
-	.attr("transform", "translate(0, " + h + ")");
+	this.g = this.svg.append("svg:g")
+		.attr("transform", "translate(0, " + this.height + ")");
 
-var line = d3.svg.line()
-	.interpolate('linear')
-	.x(function(d,i) { return x(i); })
-	.y(function(d) { return -1 * y(d); });
+	this.line = d3.svg.line()
+		.interpolate('linear')
+		.x(function (d, i) { return this.x(i); })
+		.y(function (d) { return -1 * this.y(d); });
+}
+LineChart.prototype = {
+	draw: function () {
+		var self = this;
+		this.g.selectAll("." + this.yLabelClass)
+			.data(this.y.ticks(2))
+			.enter().append("svg:text")
+			.attr("class", this.yLabelClass)
+			.text(String)
+			.attr("x", d3.select(this.target).attr('width') - 50)
+			.attr("y", function(d) { return -1 * self.y(d) })
+			.attr("text-anchor", "left")
+			.attr("dy", 5);
 
+		this.g.selectAll("." + this.yTicksClass)
+			.data(this.y.ticks(2))
+			.enter().append("svg:line")
+			.attr("class", this.yTicksClass)
+			.attr("y1", function(d) { return -1 * self.y(d); })
+			.attr("x1", this.x(-0.3))
+			.attr("y2", function(d) { return -1 * self.y(d); })
+			.attr("x2", d3.select('svg').attr('width') - 70);
 
-g.selectAll(".yLabel")
-	.data(y.ticks(2))
-	.enter().append("svg:text")
-	.attr("class", "yLabel")
-	.text(String)
-	.attr("x", d3.select('svg').attr('width') - 50)
-	.attr("y", function(d) { return -1 * y(d) })
-	.attr("text-anchor", "left")
-	.attr("dy", 5);
+		this.g.append('text')
+			.attr({
+				class: self.specialTextClass,
+				y: -50,
+				x: 0
+			})
+			.text(this.data[this.data.length - 1] + 'ms');
 
-g.selectAll(".yTicks")
-	.data(y.ticks(2))
-	.enter().append("svg:line")
-	.attr("class", "yTicks")
-	.attr("y1", function(d) { return -1 * y(d); })
-	.attr("x1", x(-0.3))
-	.attr("y2", function(d) { return -1 * y(d); })
-	.attr("x2", d3.select('svg').attr('width') - 70);
-	//x(0));
-
-g.append('text')
-	.attr({
-		class: 'special-text',
-		y: -50,
-		x: 0
-	})
-	.text(data[data.length - 1] + 'ms');
-
-g.append("svg:path").attr("d", line(data));
+		this.g.append("svg:path").attr("d", this.line(this.data));
+	}
+}
