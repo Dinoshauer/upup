@@ -1,4 +1,4 @@
-function LineChart (data, chart) {
+function LineChartSimple (data, chart) {
 	this.data = data;
 
 	this.margin = chart.margin || { top: 0, bottom: 0, left: 0, right: 0 };
@@ -11,7 +11,7 @@ function LineChart (data, chart) {
 	this.specialTextClass = chart.classes.specialTextClass || 'special-text';
 		
 	this.y = d3.scale.linear()
-		.domain([d3.min(this.data), d3.max(this.data.value)])
+		.domain([d3.min(this.data), d3.max(this.data)])
 		.range([this.margin.bottom, this.height - this.margin.bottom]);
 	
 	this.x = d3.scale.linear()
@@ -23,43 +23,66 @@ function LineChart (data, chart) {
 		.attr("width", this.width)
 		.attr("height", this.height);
 
+	this.meta = this.svg.append("svg:g")
+		.attr({
+			transform: "translate(0, " + this.height + ")",
+			class: 'meta'
+		});
+
 	this.g = this.svg.append("svg:g")
-		.attr("transform", "translate(0, " + this.height + ")");
+		.attr({
+			transform: "translate(0, " + this.height + ")",
+			class: 'path'
+		});
 
 	this.line = d3.svg.line()
 		.interpolate('linear')
-		.x(function (d, i) { return this.x(i); })
+		.x(function (d, i) { return this.x(i) - 40; })
 		.y(function (d) { return -1 * this.y(d); });
+
+	this.circles = this.meta.selectAll('circle').data(this.data);
 }
-LineChart.prototype = {
+LineChartSimple.prototype = {
 	draw: function () {
 		var self = this;
-		this.g.selectAll("." + this.yLabelClass)
-			.data(this.y.ticks(2))
+		this.meta.selectAll("." + this.yLabelClass)
+			.data(this.y.ticks(3))
 			.enter().append("svg:text")
 			.attr("class", this.yLabelClass)
 			.text(String)
-			.attr("x", d3.select(this.target).attr('width') - 50)
+			.attr("x", $(self.target).parent().width() - 40)
 			.attr("y", function(d) { return -1 * self.y(d) })
 			.attr("text-anchor", "left")
 			.attr("dy", 5);
 
-		this.g.selectAll("." + this.yTicksClass)
-			.data(this.y.ticks(2))
+		this.meta.selectAll("." + this.yTicksClass)
+			.data(this.y.ticks(3	))
 			.enter().append("svg:line")
 			.attr("class", this.yTicksClass)
-			.attr("y1", function(d) { return -1 * self.y(d); })
+			.attr("y1", function (d) { return -1 * self.y(d); })
 			.attr("x1", this.x(-0.3))
-			.attr("y2", function(d) { return -1 * self.y(d); })
-			.attr("x2", d3.select('svg').attr('width') - 70);
+			.attr("y2", function (d) { return -1 * self.y(d); })
+			.attr("x2", $(self.target).parent().width() - 45);
 
-		this.g.append('text')
+		this.meta.append('text')
 			.attr({
 				class: self.specialTextClass,
 				y: -2,
 				x: 0
 			})
 			.text(this.data[this.data.length - 1] + self.specialTextAppendage);
+
+		this.circles.enter()
+			.append('circle')
+			.attr({
+				fill: 'red',
+				cx: function (d, i) { return self.x(i) - 40; },
+				cy: function (d) { return -1 * self.y(d); },
+				r: 5
+			})
+			.on('mouseover', function (d) {
+				console.log(d);
+			});
 
 		this.g.append("svg:path").attr("d", this.line(this.data));
 	}

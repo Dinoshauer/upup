@@ -319,7 +319,7 @@
 		<script src="js/d3.v3.min.js"></script>
 		<script src="js/d3.chart.min.js"></script>
 		<script src="js/barchart.js"></script>
-		<script src="js/linechart.js"></script>
+		<script src="js/linechart.simple.js"></script>
 		<script>
 			function sortServers (items) {
 				items.sort(function (a, b) {
@@ -374,27 +374,27 @@
 
 					barchart.draw(data);
 
-					var response_time_options = {
-							width: self.width(),
-							height: 100,
-							margin: {
-								top: 0,
-								bottom: 0,
-								left: 0,
-								right: 0
-							},
-							target: self.find('.response-time').get(0),
-							classes: {}
-						},
-						response_time = new LineChart(data, response_time_options);
-					response_time.draw();
+					// var response_time_options = {
+					// 		width: self.width(),
+					// 		height: 100,
+					// 		margin: {
+					// 			top: 6,
+					// 			bottom: 6,
+					// 			left: 0,
+					// 			right: 0
+					// 		},
+					// 		target: self.find('.response-time').get(0),
+					// 		classes: {}
+					// 	},
+					// 	response_time = new LineChartSimple(data, response_time_options);
+					// response_time.draw();
 
 					var availability_options = {
 							width: self.width(),
 							height: 80,
 							margin: {
-								top: 0,
-								bottom: 1,
+								top: 6,
+								bottom: 6,
 								left: 0,
 								right: 0
 							},
@@ -403,7 +403,7 @@
 							specialTextAppendage: '%'
 						},
 						availability_data = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 	100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
-						availability = new LineChart(availability_data, availability_options);
+						availability = new LineChartSimple(availability_data, availability_options);
 					availability.draw();
 				});
 
