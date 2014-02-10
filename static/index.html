@@ -93,7 +93,7 @@
 				left: 15px !important;
 			}
 			path {
-			    stroke: rgb(0, 0, 0);
+			    stroke: rgba(0, 0, 0, .6);
 			    stroke-width: 2;
 			    fill: none;
 			}
@@ -377,20 +377,20 @@
 
 					barchart.draw(data);
 
-					// var response_time_options = {
-					// 		width: self.width(),
-					// 		height: 100,
-					// 		margin: {
-					// 			top: 6,
-					// 			bottom: 6,
-					// 			left: 0,
-					// 			right: 0
-					// 		},
-					// 		target: self.find('.response-time').get(0),
-					// 		classes: {}
-					// 	},
-					// 	response_time = new LineChartSimple(data, response_time_options);
-					// response_time.draw();
+					var response_time_options = {
+							width: self.width(),
+							height: 100,
+							margin: {
+								top: 6,
+								bottom: 6,
+								left: 0,
+								right: 0
+							},
+							target: self.find('.response-time').get(0),
+							classes: {}
+						},
+						response_time = new LineChartSimple(data, response_time_options);
+					response_time.draw();
 
 					var availability_options = {
 							width: self.width(),

@@ -40,11 +40,17 @@ function LineChartSimple (data, chart) {
 		.x(function (d, i) { return this.x(i) - 40; })
 		.y(function (d) { return -1 * this.y(d); });
 
-	this.circles = this.meta.selectAll('circle').data(this.data);
+	this.circle_group = this.svg.append("svg:g")
+		.attr({
+			transform: "translate(0, " + this.height + ")"
+		});
+
+	this.circles = this.circle_group.selectAll('circle').data(this.data);
 }
 LineChartSimple.prototype = {
 	draw: function () {
-		var self = this;
+		var self = this,
+			animInterval;
 		this.meta.selectAll("." + this.yLabelClass)
 			.data(this.y.ticks(3))
 			.enter().append("svg:text")
@@ -72,23 +78,33 @@ LineChartSimple.prototype = {
 			})
 			.text(this.data[this.data.length - 1] + self.specialTextAppendage);
 
+		this.g.append("svg:path").attr("d", this.line(this.data));
+
 		this.circles.enter()
 			.append('circle')
 			.attr({
-				fill: 'rgba(0,0,0,0)',
+				fill: 'rgba(200, 200, 200, 0)',
 				cx: function (d, i) { return self.x(i) - 40; },
 				cy: function (d) { return -1 * self.y(d); },
 				r: 10
 			})
 			.on('mouseover', function (d) {
+				d3.select(this)
+					.transition()
+					.attr('fill', 'rgba(200, 200, 200, .8)')
+					.duration(500);
+
 				d3.select('.' + self.specialTextClass)
 					.text(d + self.specialTextAppendage);
 			})
 			.on('mouseout', function (d) {
-				d3.select('.' + self.specialTextClass)
+				d3.select(this)
+					.transition()
+					.attr('fill', 'rgba(200, 200, 200, 0)')
+					.duration(500);
+
+				d3.select('.' + self.	specialTextClass)
 					.text(self.data[self.data.length - 1] + self.specialTextAppendage);
 			});
-
-		this.g.append("svg:path").attr("d", this.line(this.data));
 	}
 }
