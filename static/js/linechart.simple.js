@@ -82,6 +82,9 @@ LineChartSimple.prototype = {
 			})
 			.on('mouseover', function (d) {
 				console.log(d);
+			})
+			.on('mouseout', function (d) {
+				console.log(d);
 			});
 
 		this.g.append("svg:path").attr("d", this.line(this.data));
