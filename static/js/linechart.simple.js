@@ -75,16 +75,18 @@ LineChartSimple.prototype = {
 		this.circles.enter()
 			.append('circle')
 			.attr({
-				fill: 'red',
+				fill: 'rgba(0,0,0,0)',
 				cx: function (d, i) { return self.x(i) - 40; },
 				cy: function (d) { return -1 * self.y(d); },
-				r: 5
+				r: 10
 			})
 			.on('mouseover', function (d) {
-				console.log(d);
+				d3.select('.' + self.specialTextClass)
+					.text(d + self.specialTextAppendage);
 			})
 			.on('mouseout', function (d) {
-				console.log(d);
+				d3.select('.' + self.specialTextClass)
+					.text(self.data[self.data.length - 1] + self.specialTextAppendage);
 			});
 
 		this.g.append("svg:path").attr("d", this.line(this.data));
