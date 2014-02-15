@@ -94,7 +94,7 @@ LineChartSimple.prototype = {
 					.attr('fill', 'rgba(200, 200, 200, .8)')
 					.duration(500);
 
-				d3.select('.' + self.specialTextClass)
+				self.meta.select('.' + self.specialTextClass)
 					.text(d + self.specialTextAppendage);
 			})
 			.on('mouseout', function (d) {
@@ -103,7 +103,7 @@ LineChartSimple.prototype = {
 					.attr('fill', 'rgba(200, 200, 200, 0)')
 					.duration(500);
 
-				d3.select('.' + self.	specialTextClass)
+				self.meta.select('.' + self.specialTextClass)
 					.text(self.data[self.data.length - 1] + self.specialTextAppendage);
 			});
 	}
