@@ -49,8 +49,8 @@ function LineChartSimple (data, chart) {
 }
 LineChartSimple.prototype = {
 	draw: function () {
-		var self = this,
-			animInterval;
+		var self = this;
+
 		this.meta.selectAll("." + this.yLabelClass)
 			.data(this.y.ticks(3))
 			.enter().append("svg:text")
