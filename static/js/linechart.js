@@ -44,7 +44,7 @@ function LineChart (data, chart) {
 	this.line = d3.svg.line()
 		.interpolate('linear')
 		.x(function (d, i) { return this.x(i) - 40; })
-		.y(function (d) { return -1 * this.y(d); });
+		.y(function (d) { return -1 * this.y(d.value); });
 
 	this.circle_group = this.svg.append("svg:g")
 		.attr({
@@ -94,14 +94,18 @@ LineChart.prototype = {
 			})
 			.text('An hour ago');
 
-		this.g.append("svg:path").attr("d", this.line(this.data));
+		this.g.append("svg:path").attr({
+			d: this.line(this.data)
+		});
 
 		this.circles.enter()
 			.append('circle')
 			.attr({
 				fill: 'rgba(200, 200, 200, 0)',
 				cx: function (d, i) { return self.x(i) - 40; },
-				cy: function (d) { return -1 * self.y(d); },
+				cy: function (d) {
+					return -1 * self.y(d.value);
+				},
 				r: 10
 			})
 			.on('mouseover', function (d) {
@@ -111,10 +115,10 @@ LineChart.prototype = {
 					.duration(500);
 
 				self.meta.select('.' + self.specialTextClass)
-					.text(d + self.specialTextAppendage);
+					.text(d.value + self.specialTextAppendage);
 
 				self.meta.select('.time')
-					.text('stuff');
+					.text(d.time);
 			})
 			.on('mouseout', function (d) {
 				d3.select(this)
@@ -126,7 +130,7 @@ LineChart.prototype = {
 					.text(self.data[self.data.length - 1].value + self.specialTextAppendage);
 
 				self.meta.select('.time')
-					.text(self.data[self.data.length - 1]);
+					.text(self.data[self.data.length - 1].time);
 			});
 	}
 }
